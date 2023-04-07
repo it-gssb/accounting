@@ -1,4 +1,4 @@
-package accounting.charge;
+package org.gssb.accounting.charge;
 
 public enum ChargeType {
    

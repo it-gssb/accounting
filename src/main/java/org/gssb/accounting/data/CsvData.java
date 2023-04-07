@@ -1,4 +1,4 @@
-package accounting.data;
+package org.gssb.accounting.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

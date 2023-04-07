@@ -1,4 +1,4 @@
-package accounting.csv;
+package org.gssb.accounting.csv;
 
 import java.io.FileReader;
 import java.io.Reader;
@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.gssb.accounting.data.CsvData;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-
-import accounting.data.CsvData;
 
 public class CsvLoader {
    

@@ -1,11 +1,11 @@
-package accounting.charge;
+package org.gssb.accounting.charge;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import accounting.data.CsvData;
+import org.gssb.accounting.data.CsvData;
 
 public class Account {
    

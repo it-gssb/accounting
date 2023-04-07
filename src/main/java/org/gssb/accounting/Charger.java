@@ -1,16 +1,15 @@
-package accounting;
+package org.gssb.accounting;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.gssb.accounting.charge.Account;
+import org.gssb.accounting.csv.CsvLoader;
+import org.gssb.accounting.data.CsvData;
+import org.gssb.accounting.web.WebCharger;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
-import accounting.charge.Account;
-import accounting.csv.CsvLoader;
-import accounting.data.CsvData;
-import accounting.web.WebCharger;
 
 public class Charger {
    

@@ -1,4 +1,4 @@
-package accounting.web;
+package org.gssb.accounting.web;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -6,13 +6,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.gssb.accounting.charge.ChargeType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
-
-import accounting.charge.ChargeType;
 
 public class WebCharger {
    

@@ -28,7 +28,7 @@ sourceCompatibility = 1.11
 // Load version info during configuration phase
 version = readVersionInfo(versionProperties)
 
-mainClassName = "org.gssb.accounting.Account"
+//mainClassName = "org.gssb.accounting.Account"
 group = "org.gssb"
 
 
@@ -54,7 +54,7 @@ sourceSets {
 
 eclipse {
 	classpath {
-		defaultOutputDir = file('build-eclipse')
+		defaultOutputDir = file('bin')
 		downloadSources=true
 	}
 }
@@ -63,7 +63,7 @@ eclipse {
 jar {
    exclude ("licenses/**")
 	manifest {
-		attributes 'Implementation-Title': 'PDF Filler for GSSB AATG Certificates', 'Implementation-Version': version
+		attributes 'Implementation-Title': 'Accounting Automation for Sycamore', 'Implementation-Version': version
 	}
 }
 
@@ -74,7 +74,6 @@ task testJar (type: Jar) {
 
 repositories {
    mavenCentral()
-   jcenter()
 }
 
 dependencies {
@@ -100,7 +99,7 @@ task srcZip(type: Zip) {
 
 test {
    useJUnitPlatform()
-   exclude 'org/gssb/pdffiller/**/AllTests.class'
+   exclude 'org/gssb/accounting/**/AllTests.class'
 
    //disable as potentially we have a concurrency issue in test cases
    maxParallelForks = 1
@@ -268,34 +267,5 @@ task printVersion(group: 'versioning', description: 'Prints versioning info as p
 	   println "Build Number: $version.buildNumber"
 	   println "Build Day: $version.buildDay"
 	   println "Build Time: $version.buildTime"
-	}
-}
-
-def fixWindowsStartScript(writer, lines) {
-	lines.eachWithIndex { line, i ->
-		if (line =~ /^set CLASSPATH=%APP_HOME%/) {
-			writer.println line
-			writer.println "set CLASSPATH=%CLASSPATH%;%APP_HOME%\\lib\\*"
-			writer.println ''
-         writer.println "set DEFAULT_JVM_OPTS=\"-Dlog4j.configurationFile=%~dp0/../conf/log4j2.xml\""
-			writer.println ''
-		} else {
-			writer.println line
-		}
-	}
-}
-
-def fixUnixStartScript(writer, lines) {
-	lines.eachWithIndex { line, i ->
-	    if (line =~ /^CLASSPATH=\$/) {
-			writer.println line
-			writer.println ''
-			writer.println "CLASSPATH=\$CLASSPATH:\$APP_HOME/lib/*"
-			writer.println ''
-         writer.println "DEFAULT_JVM_OPTS=\"-Dlog4j.configurationFile=\${0%/*}/../conf/log4j2.xml\""
-			writer.println ''
-		} else {
-			writer.println line
-		}
 	}
 }
