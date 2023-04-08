@@ -2,6 +2,7 @@ package org.gssb.accounting.csv;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,30 +19,30 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 public class CsvLoader {
-   
+
    private final static Logger logger = LogManager.getLogger(CsvLoader.class);
-   
+
    public Map<String, List<CsvData>> load(final String fileName) {
       CsvMapper csvMapper = new CsvMapper();
-      CsvSchema schema = CsvSchema.emptySchema().withHeader(); 
-       
+      CsvSchema schema = CsvSchema.emptySchema().withHeader();
+
       List<CsvData> readValues = new ArrayList<>();
-      
+
       ObjectReader oReader = csvMapper.readerFor(CsvData.class).with(schema);
-      try (Reader reader = new FileReader(fileName)) {
+      try (Reader reader = new FileReader(fileName, StandardCharsets.ISO_8859_1)) {
          MappingIterator<CsvData> mi = oReader.readValues(reader);
          while (mi.hasNext()) {
             CsvData current = mi.next();
             readValues.add(current);
          }
-    
-         Map<String, List<CsvData>> families = 
+
+         Map<String, List<CsvData>> families =
                 readValues.stream()
                           .collect(Collectors.groupingBy(f -> f.getFamilyId()));
-         
+
          var msg = String.format("Data of %d families loaded", families.size());
          System.out.println(msg);
-      
+
          return families;
       } catch (Exception e) {
         logger.error("Error occurred while loading many to many relationship " +

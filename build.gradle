@@ -3,10 +3,10 @@ plugins {
    id 'eclipse'
    id 'idea'
    id 'application'
-   id "com.github.spotbugs" version "4.7.10"
+   id "com.github.spotbugs" version "4.7.3"
    id 'project-report'
-   id "com.github.ben-manes.versions" version "0.46.0"
-   id "org.owasp.dependencycheck" version "8.1.2"
+   id "com.github.ben-manes.versions" version "0.42.0"
+   id "org.owasp.dependencycheck" version "8.2.1"
 }
 
 // find newer versions for dependent libraries 
@@ -31,26 +31,6 @@ version = readVersionInfo(versionProperties)
 //mainClassName = "org.gssb.accounting.Account"
 group = "org.gssb"
 
-
-configurations {
-    testArtifacts
-    // provided implies that the project artifacts are added to the
-    // compileClasspath for main and test and the runtimeClasspath for test
-    provided
-}
-
-sourceSets {
-   main {
-     compileClasspath += configurations.provided
-     java {
-       srcDirs = ['src/main/java']
-     }
-   }
-   test {
-      compileClasspath += configurations.provided
-      runtimeClasspath += configurations.provided
-   }
-}
 
 eclipse {
 	classpath {
@@ -83,12 +63,19 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.14.2'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
     implementation "commons-cli:commons-cli:1.5.0"
     implementation "org.apache.logging.log4j:log4j-api:2.20.0"
     implementation "org.apache.logging.log4j:log4j-core:2.20.0"
 
     testImplementation "junit:junit:4.13.2"
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    
+    // test engine for gradle build
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 }
 
 task srcZip(type: Zip) {
@@ -99,7 +86,7 @@ task srcZip(type: Zip) {
 
 test {
    useJUnitPlatform()
-   exclude 'org/gssb/accounting/**/AllTests.class'
+//   exclude 'org/gssb/accounting/**/AllTests.class'
 
    //disable as potentially we have a concurrency issue in test cases
    maxParallelForks = 1
