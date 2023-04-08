@@ -66,16 +66,24 @@ public class Account {
       return charge;
    }
 
+   private double getChargeAmount(List<ChargeType> charges) {
+      return charges.stream()
+                    .map(c -> c.charge)
+                    .reduce(0d, Double::sum);
+   }
+
    protected List<ChargeType> createCharges(final List<Integer> classes,
                                             final String familyCode,
                                             final boolean isHelper) {
       List<ChargeType> charges = new ArrayList<>();
-      if (classes.size()>3) {
+      for (int i=0; i< classes.size(); i++) {
+         charges.add(getCharge(classes.get(i), i==0));
+      }
+
+      // apply family charge if total tuition exceeds family charge
+      if (getChargeAmount(charges) > ChargeType.FAM.charge) {
+         charges.clear();
          charges.add(ChargeType.FAM);
-      } else {
-         for (int i=0; i< classes.size(); i++) {
-            charges.add(getCharge(classes.get(i), i==0));
-         }
       }
 
       classes.forEach(c -> {var fee = getFee(c);

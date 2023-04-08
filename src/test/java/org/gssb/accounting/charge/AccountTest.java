@@ -170,7 +170,9 @@ public class AccountTest {
 
       List<Integer> classes = List.of(-1, 0, 1, 11);
       var expected = new HashMap<ChargeType, Integer>();
-      expected.put(ChargeType.FAM, 1);
+      expected.put(ChargeType.PSDSD, 1);
+      expected.put(ChargeType._2n3rP, 2);
+      expected.put(ChargeType._2_3DS, 1);
       expected.put(ChargeType.PreKF, 2);
       expected.put(ChargeType._1grad, 1);
       expected.put(ChargeType.DSDSp, 1);
