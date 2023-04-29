@@ -28,7 +28,7 @@ sourceCompatibility = 1.11
 // Load version info during configuration phase
 version = readVersionInfo(versionProperties)
 
-//mainClassName = "org.gssb.accounting.Account"
+mainClassName = "org.gssb.accounting.Charger"
 group = "org.gssb"
 
 

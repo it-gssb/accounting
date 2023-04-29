@@ -17,7 +17,7 @@ public class Account {
                                    "KUN1244",  "RIC1259", "SAS1680", "SIM1949");
    }
 
-   protected ChargeType getSkCredit(final String familyCode) {
+   private ChargeType getSkCredit(final String familyCode) {
       return commiteeFamilyCodes.contains(familyCode) ? ChargeType.SK100
                                                       : null;
    }
