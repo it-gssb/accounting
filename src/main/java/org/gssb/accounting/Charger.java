@@ -1,5 +1,7 @@
 package org.gssb.accounting;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +29,11 @@ public class Charger {
    //
 
    private static class Configuration {
-      String  userName = null;
-      String  password = null;
-      String  fileName = null;
-      boolean simulate = false;
+      Path    configFile = null;
+      String  userName   = null;
+      String  password   = null;
+      String  fileName   = null;
+      boolean simulate   = false;
    }
 
    //
@@ -44,8 +47,8 @@ public class Charger {
    public Charger(final Configuration config) {
       super();
       this.loader  = new CsvLoader();
-      this.account = new Account();
-      this.charger = new WebCharger(config.simulate);
+      this.account = new Account(config.configFile);
+      this.charger = new WebCharger(config.configFile, config.simulate);
    }
 
    private void chargeFamily(final RemoteWebDriver driver, final String familyID,
@@ -59,8 +62,9 @@ public class Charger {
       this.charger.chargeAccountAndCreateInvoice(familyID, charges, driver);
    }
 
-   public void charge(final String fileName,
+   public void charge(final Path configFile, final String fileName,
                       final String userName, final String password) {
+
       var records = this.loader.load(fileName)
                           .entrySet()
                           .stream()
@@ -84,7 +88,7 @@ public class Charger {
    }
 
    private void run(final Configuration config) {
-      charge(config.fileName, config.userName, config.password);
+      charge(config.configFile, config.fileName, config.userName, config.password);
       System.exit(0);
    }
 
@@ -109,6 +113,13 @@ public class Charger {
 
          if (cmd.hasOption("h"))
             help();
+
+         if (cmd.hasOption("c")) {
+            config.configFile = Paths.get(cmd.getOptionValue("c"));
+         } else {
+            logger.error("Missing configuration file option");
+            help();
+         }
 
          if (cmd.hasOption("f")) {
             config.fileName = cmd.getOptionValue("f");
@@ -147,6 +158,8 @@ public class Charger {
     */
    public static void main(final String[] args) {
       options.addOption("h", "help", false, "Show help.");
+      options.addOption("c", "configuration", true,
+            "Configuration file for application.");
       options.addOption("u", "username", true, "Sycamore user");
       options.addOption("p", "password", true, "Sycamore user password.");
       options.addOption("s", "simulate", false,

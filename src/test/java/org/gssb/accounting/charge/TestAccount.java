@@ -1,11 +1,13 @@
 package org.gssb.accounting.charge;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 public class TestAccount extends Account {
 
-   TestAccount() {
-      commiteeFamilyCodes = Set.of("SKM1234");
+   TestAccount(final Path path) {
+      super(path);
+      this.commiteeFamilyCodes = Set.of("SKM1234");
    }
 
 }

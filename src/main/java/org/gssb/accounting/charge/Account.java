@@ -1,25 +1,34 @@
 package org.gssb.accounting.charge;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.gssb.accounting.config.AppProperties;
 import org.gssb.accounting.data.CsvData;
 
 public class Account {
 
    protected Set<String> commiteeFamilyCodes;
 
-   public Account() {
+   public Account(final Path configPath) {
       super();
-      commiteeFamilyCodes = Set.of("CRA1685", "DOW2188", "HAA2167", "JOL2087",
-                                   "KUN1244",  "RIC1259", "SAS1680", "SIM1949");
+      var properties = createPropertiesInstance(configPath);
+      this.commiteeFamilyCodes = new HashSet<>(properties.getSkFamilyCodes());
+
+
+   }
+
+   protected AppProperties createPropertiesInstance(final Path configFile) {
+      return new AppProperties(configFile);
    }
 
    private ChargeType getSkCredit(final String familyCode) {
-      return commiteeFamilyCodes.contains(familyCode) ? ChargeType.SK100
-                                                      : null;
+      return this.commiteeFamilyCodes.contains(familyCode) ? ChargeType.SK100
+                                                           : null;
    }
 
    private ChargeType getCredit(final int grade) {
@@ -66,24 +75,12 @@ public class Account {
       return charge;
    }
 
-   private double getChargeAmount(List<ChargeType> charges) {
-      return charges.stream()
-                    .map(c -> c.charge)
-                    .reduce(0d, Double::sum);
-   }
-
    protected List<ChargeType> createCharges(final List<Integer> classes,
                                             final String familyCode,
                                             final boolean isHelper) {
       List<ChargeType> charges = new ArrayList<>();
       for (int i=0; i< classes.size(); i++) {
          charges.add(getCharge(classes.get(i), i==0));
-      }
-
-      // apply family charge if total tuition exceeds family charge
-      if (getChargeAmount(charges) > ChargeType.FAM.charge) {
-         charges.clear();
-         charges.add(ChargeType.FAM);
       }
 
       classes.forEach(c -> {var fee = getFee(c);

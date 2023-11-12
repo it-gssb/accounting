@@ -1,12 +1,15 @@
 package org.gssb.accounting.web;
 
+import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.gssb.accounting.charge.ChargeType;
+import org.gssb.accounting.config.AppProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -24,11 +27,27 @@ public class WebCharger {
    private static final String FAMILIY_CHARGE =
          SYCAMORE_BASE_URL + "/familycharge.php";
 
+   private final Map<String, Double> charges;
    private final boolean testRun;
 
-   public WebCharger(final boolean testRun) {
+   public WebCharger(final Path configPath, final boolean testRun) {
       super();
-      this.testRun = testRun;
+      var properties = createPropertiesInstance(configPath);
+      var chargeNames = Arrays.asList(ChargeType.values())
+                              .stream()
+                              .map(e -> e.name())
+                              .collect(Collectors.toList());
+      this.charges   = createChargeMapping(properties, chargeNames);
+      this.testRun   = testRun;
+   }
+
+   Map<String, Double> createChargeMapping(final AppProperties properties,
+                                           final List<String> chargeNames) {
+      return properties.getChargesMap(chargeNames);
+   }
+
+   AppProperties createPropertiesInstance(final Path configFile) {
+      return new AppProperties(configFile);
    }
 
    public RemoteWebDriver login(final String userName, final String password) {
@@ -116,7 +135,7 @@ public class WebCharger {
          if (i<6) {
             selectCharge(i++, entry.getKey().label, entry.getValue(), driver);
          } else {
-            var amount = entry.getKey().charge;
+            var amount = this.charges.get(entry.getKey().name());
             for (int j = 0; j < entry.getValue(); j++) {
                writeCharge(i-5, entry.getKey().label, amount, driver);
                i++;

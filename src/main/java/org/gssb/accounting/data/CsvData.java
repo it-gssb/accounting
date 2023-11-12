@@ -29,7 +29,7 @@ public class CsvData {
 //   String familyTags;
 //   @JsonProperty("Family Name")
 //   String familyName;
-   
+
    @JsonProperty("Family Code")
    String familyCode;
    @JsonProperty("Family ID")
@@ -38,5 +38,5 @@ public class CsvData {
    String parentHelperChoice;
    @JsonProperty("Application Grade Code")
    int grade;
-   
+
 }
