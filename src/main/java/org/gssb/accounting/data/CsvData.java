@@ -17,26 +17,13 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 public class CsvData {
 
-//   @JsonProperty("Student Code")
-//   String studentCode;
-//   @JsonProperty("Student ID")
-//   String studentID;
-//   @JsonProperty("Student First Name")
-//   String studentFirstName;
-//   @JsonProperty("Student Last Name")
-//   String studentLastName;
-//   @JsonProperty("Family Tags")
-//   String familyTags;
-//   @JsonProperty("Family Name")
-//   String familyName;
-
-   @JsonProperty("Family Code")
+   @JsonProperty("FamilyCode")
    String familyCode;
-   @JsonProperty("Family ID")
+   @JsonProperty("FamilyID")
    String familyId;
-   @JsonProperty("Parent Helper Choice 1")
+   @JsonProperty("ParentHelperChoice1")
    String parentHelperChoice;
-   @JsonProperty("Application Grade Code")
+   @JsonProperty("ApplicationGradeCode")
    int grade;
 
 }
