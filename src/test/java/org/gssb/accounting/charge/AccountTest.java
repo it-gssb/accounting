@@ -85,7 +85,7 @@ public class AccountTest {
    }
 
    @Test
-   public void test2To10Grade() {
+   public void test2To8and10Grade() {
       for (int i : List.of(2,3,4,5,6,7,8,12)) {
          var fixture = new TestAccount(CONFIG_PATH);
          List<Integer> classes = List.of(i);
