@@ -23,7 +23,7 @@ ext {
    gradleVersionLocal = '7.6.1'
 }
 
-sourceCompatibility = 1.11
+sourceCompatibility = 1.17
 
 // Load version info during configuration phase
 version = readVersionInfo(versionProperties)
@@ -34,7 +34,7 @@ group = "org.gssb"
 
 eclipse {
 	classpath {
-		defaultOutputDir = file('bin')
+//		defaultOutputDir = file('bin')
 		downloadSources=true
 	}
 }
