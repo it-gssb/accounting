@@ -79,6 +79,9 @@ public class Account {
                                             final String familyCode,
                                             final boolean isHelper) {
       List<ChargeType> charges = new ArrayList<>();
+
+      // always add registration fee
+      charges.add(ChargeType.RegFe);
       for (int i=0; i< classes.size(); i++) {
          charges.add(getCharge(classes.get(i), i==0));
       }

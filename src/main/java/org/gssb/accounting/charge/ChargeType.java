@@ -12,7 +12,8 @@ public enum ChargeType {
    DSDSp  ("DSD Supplement"),
    PCFul  ("Full Parent Participation Credit"),
    PCHal  ("Half Parent Participation Credit"),
-   SK100  ("School Committee Member Credit");
+   SK100  ("School Committee Member Credit"),
+   RegFe  ("Registration Fee");
 
    public final String label;
 

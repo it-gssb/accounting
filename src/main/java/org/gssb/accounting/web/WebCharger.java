@@ -64,7 +64,7 @@ public class WebCharger {
       WebElement passwordElement = driver.findElement(By.name("entered_password"));
       passwordElement.sendKeys(password);
 
-      WebElement login = driver.findElement(By.cssSelector(".loginLoginButtonDiv > h3"));
+      WebElement login = driver.findElement(By.id("submit-btn"));
       login.click();
       return driver;
    }
