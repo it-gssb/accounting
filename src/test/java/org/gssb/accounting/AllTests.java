@@ -2,11 +2,10 @@ package org.gssb.accounting;
 
 import org.gssb.accounting.charge.AccountTest;
 import org.gssb.accounting.web.WebChargerTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(Suite.class)
-@SuiteClasses({WebChargerTest.class, AccountTest.class})
+@Suite
+@SelectClasses({WebChargerTest.class, AccountTest.class})
 public class AllTests {
 }

@@ -1,7 +1,7 @@
 package org.gssb.accounting.charge;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class AccountTest {
 
@@ -31,10 +32,9 @@ public class AccountTest {
                          final List<ChargeType> result) {
       var grouped = groupChargeTypes(result);
       for (Entry<ChargeType, Integer> exp : expected.entrySet()) {
-         assertNotNull("Mismatch with charge type " + exp.getKey(),
-                       grouped.get(exp.getKey()));
-         assertEquals("Mismatch with charge type " + exp.getKey(),
-                      (int)exp.getValue(), (int)(long)grouped.get(exp.getKey()));
+         assertNotNull(grouped.get(exp.getKey()), "Mismatch with charge type " + exp.getKey());
+         assertEquals((int)exp.getValue(), (int)(long)grouped.get(exp.getKey()),
+                      "Mismatch with charge type " + exp.getKey());
       }
       // make sure we do not have a disjoined result
       assertEquals(expected.size(), grouped.size());
@@ -48,6 +48,7 @@ public class AccountTest {
       for (int i=-1; i<1; i++) {
          List<Integer> classes = List.of(i);
          var expected = new HashMap<ChargeType, Integer>();
+         expected.put(ChargeType.RegFe, 1);
          expected.put(ChargeType.PSDSD, 1);
          expected.put(ChargeType.PreKF, 1);
 
@@ -69,6 +70,7 @@ public class AccountTest {
       var fixture = new TestAccount(CONFIG_PATH);
       List<Integer> classes = List.of(1);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._1grad, 1);
 
@@ -90,6 +92,7 @@ public class AccountTest {
          var fixture = new TestAccount(CONFIG_PATH);
          List<Integer> classes = List.of(i);
          var expected = new HashMap<ChargeType, Integer>();
+         expected.put(ChargeType.RegFe, 1);
          expected.put(ChargeType.PSDSD, 1);
 
          var charges = fixture.createCharges(classes, "FAM0000", false);
@@ -111,6 +114,7 @@ public class AccountTest {
          var fixture = new TestAccount(CONFIG_PATH);
          List<Integer> classes = List.of(i);
          var expected = new HashMap<ChargeType, Integer>();
+         expected.put(ChargeType.RegFe, 1);
          expected.put(ChargeType.PSDSD, 1);
          expected.put(ChargeType.DSDSp, 1);
 
@@ -133,6 +137,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(-1,-1,0);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._2n3rP, 2);
       expected.put(ChargeType.PreKF, 3);
@@ -155,6 +160,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(-1, 0, 1, 9, 11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._2n3rP, 3);
       expected.put(ChargeType._2_3DS, 1);
@@ -180,6 +186,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(-1, 0, 1, 11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._2n3rP, 2);
       expected.put(ChargeType._2_3DS, 1);
@@ -197,6 +204,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(0, 5, 11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._2n3rP, 1);
       expected.put(ChargeType._2_3DS, 1);
@@ -217,6 +225,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(6, 11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType.PSDSD, 1);
       expected.put(ChargeType._2_3DS, 1);
       expected.put(ChargeType.DSDSp, 1);
@@ -235,6 +244,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType._1stDS, 1);
       expected.put(ChargeType.DSDSp, 1);
 
@@ -252,6 +262,7 @@ public class AccountTest {
 
       List<Integer> classes = List.of(11, 11);
       var expected = new HashMap<ChargeType, Integer>();
+      expected.put(ChargeType.RegFe, 1);
       expected.put(ChargeType._1stDS, 1);
       expected.put(ChargeType._2_3DS, 1);
       expected.put(ChargeType.DSDSp, 2);
